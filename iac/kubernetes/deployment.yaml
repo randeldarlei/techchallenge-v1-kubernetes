@@ -1,6 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: techchallenge-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: maven:3.9.8-eclipse-temurin-17-alpine
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_HOST
+          value: "techchallenge-psql"
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_NAME
+          value: "techchallenge"
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_PASSWORD
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: techchallenge-psql
 spec:
   replicas: 1
