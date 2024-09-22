@@ -59,7 +59,7 @@ spring:
             show_sql: false
 
     datasource:
-        url: jdbc:postgresql://techchallenge_psql:5432/techchallenge
+        url: jdbc:postgresql://techchallenge-psql:5432/techchallenge
         username: techchallenge_usr
         password: P0o9i8u7
 

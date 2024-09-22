@@ -3,10 +3,15 @@ kind: Deployment
 metadata:
   name: techchallenge-backend
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: backend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 2  
   template:
     metadata:
       labels:
@@ -14,9 +19,11 @@ spec:
     spec:
       containers:
       - name: backend
-        image: maven:3.9.8-eclipse-temurin-17-alpine
+        image: sickbanger/techchallenge-backend:latest
         ports:
         - containerPort: 8080
+        command: ["mvn"]
+        args: ["clean", "install", "-Pprod"]
         env:
         - name: DB_HOST
           value: "techchallenge-psql"
@@ -34,6 +41,13 @@ spec:
             secretKeyRef:
               name: postgres-secret
               key: POSTGRES_PASSWORD
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+          requests:
+            cpu: 300m
+            memory: 512Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -70,6 +84,13 @@ spec:
         volumeMounts:
         - name: dbdata
           mountPath: /var/lib/postgresql/data
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+          requests:
+            cpu: 300m
+            memory: 512Mi
       volumes:
       - name: dbdata
         persistentVolumeClaim:
