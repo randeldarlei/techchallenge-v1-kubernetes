@@ -8,4 +8,4 @@ RUN mvn clean install -P prod -Dmaven.test.skip=true
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "./target/techchallenge-1.0.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "/home/app/target/techchallenge-1.0.0-SNAPSHOT.jar"]

@@ -19,28 +19,31 @@ spec:
     spec:
       containers:
       - name: backend
-        image: sickbanger/techchallenge-backend:latest
+        image: sickbanger/techchallenge:v1.1
         ports:
         - containerPort: 8080
-        command: ["mvn"]
-        args: ["clean", "install", "-Pprod"]
+        command: ["java", "-jar"]
+        args: ["/home/app/target/techchallenge-1.0.0-SNAPSHOT.jar", "--spring.profiles.active=prod"]
         env:
         - name: DB_HOST
-          value: "techchallenge-psql"
+          valueFrom:
+            configMapKeyRef:
+              name: backend-config
+              key: DB_HOST
         - name: DB_PORT
-          value: "5432"
+          valueFrom:
+            configMapKeyRef:
+              name: backend-config
+              key: DB_PORT
         - name: DB_NAME
-          value: "techchallenge"
+          valueFrom:
+            configMapKeyRef:
+              name: backend-config
+              key: DB_NAME
         - name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: POSTGRES_USER
+          value: "techchallenge_usr"
         - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: POSTGRES_PASSWORD
+          value: "P0o9i8u7"
         resources:
           limits:
             cpu: 500m
@@ -48,6 +51,7 @@ spec:
           requests:
             cpu: 300m
             memory: 512Mi
+
 ---
 apiVersion: apps/v1
 kind: Deployment
