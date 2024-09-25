@@ -10,6 +10,6 @@ export let options = {
 };
 
 export default function () {
-  http.get('http://127.0.0.1:41569/');
+  http.get('http://127.0.0.1:45049/');
   sleep(1);
 }

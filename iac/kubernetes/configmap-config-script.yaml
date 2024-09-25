@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-script
+data:
+  init_database.sql: |
+    CREATE ROLE techchallenge_usr NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT LOGIN PASSWORD 'P0o9i8u7';
+    ALTER DATABASE techchallenge OWNER TO techchallenge_usr;

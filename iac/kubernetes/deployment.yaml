@@ -70,24 +70,21 @@ spec:
       containers:
       - name: postgres
         image: postgres:16.2
-        ports:
-        - containerPort: 5432
         env:
         - name: POSTGRES_USER
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: POSTGRES_USER
+          value: "postgres"
         - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: POSTGRES_PASSWORD
+          value: "P0o9i8u7"
         - name: POSTGRES_DB
           value: "techchallenge"
+        ports:
+        - containerPort: 5432
         volumeMounts:
         - name: dbdata
           mountPath: /var/lib/postgresql/data
+        - name: init-script
+          mountPath: /docker-entrypoint-initdb.d/init_database.sql
+          subPath: init_database.sql
         resources:
           limits:
             cpu: 500m
@@ -95,7 +92,18 @@ spec:
           requests:
             cpu: 300m
             memory: 512Mi
+        livenessProbe:
+          exec:
+            command:
+              - pg_isready
+              - -U
+              - postgres
+          initialDelaySeconds: 30
+          periodSeconds: 10
       volumes:
       - name: dbdata
         persistentVolumeClaim:
           claimName: postgres-pvc
+      - name: init-script
+        configMap:
+          name: postgres-init-script
