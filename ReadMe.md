@@ -14,7 +14,7 @@ Este projeto tem como objetivo gerenciar todos os pedidos de uma lanchonete. Des
 - Link do video : https://www.youtube.com/watch?v=c3hH8KvOHtg
 
 **Video Infraestrutura - Fase 3**
-- Link do video : em breve
+- Link do video : https://youtu.be/Zx8R2V_rUKo
 
 # ⏳ 2. Execução
 
