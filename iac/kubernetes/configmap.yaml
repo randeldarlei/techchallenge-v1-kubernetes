@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: backend-config
 data:
-  DB_HOST: "terraform-20241218201931251200000001.c3qig4kemrm8.us-east-1.rds.amazonaws.com"
+  DB_HOST: "terraform-20241219001538145700000001.cd2csi00mzpw.us-east-1.rds.amazonaws.com"
   DB_PORT: "5432"
   DB_NAME: "techchallenge"
   init_database.sql: |
